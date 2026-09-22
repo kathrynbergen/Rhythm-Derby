@@ -16,7 +16,7 @@ public class TempoManager : MonoBehaviour
 
     private void startMetronome()
     {
-        StartCoroutine(BeatInterval());
+        StartCoroutine(beatInterval());
     }
     // Called every interval when a "tick" is (every 8th note)
     public void UpdateMetronomeTick()
@@ -28,20 +28,16 @@ public class TempoManager : MonoBehaviour
     }
     
     // Time between beats (every 8th note)
-    public IEnumerator BeatInterval()
+    private IEnumerator beatInterval()
     {
         yield return new WaitForSeconds(getBeatsPerSecond());
         UpdateMetronomeTick();
-        StartCoroutine(BeatInterval());
+        StartCoroutine(beatInterval());
     }
     
     private float getBeatsPerSecond()
     {
         return 60f / BPM;
     }
-
-    private float getEighthNoteBeatsPerSecond()
-    {
-        return 60f / 8 / BPM;
-    }
+    
 }
