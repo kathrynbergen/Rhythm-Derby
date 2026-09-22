@@ -4,13 +4,13 @@ using UnityEngine;
 public class TempoManager : MonoBehaviour
 {
     private int BPM = 68; // should be changed based on the song
-    private int eightNoteCount; // measures tracked in 8th notes due to accuracy being compared by the 8th note.
+    private int quarterNoteCount; // measures tracked in 8th notes due to accuracy being compared by the 8th note.
     public AudioSource audioSource;
     public AudioClip soundEffect;
 
     public void Start()
     {
-        eightNoteCount = 0;
+        quarterNoteCount = 0;
         startMetronome();
     }
 
@@ -21,10 +21,10 @@ public class TempoManager : MonoBehaviour
     // Called every interval when a "tick" is (every 8th note)
     public void UpdateMetronomeTick()
     {
-        eightNoteCount++;
+        quarterNoteCount++;
         //print("beatCount: " + beatCount);
         audioSource.PlayOneShot(soundEffect);
-        print("measure:" + eightNoteCount/8 + ", eighth note: " + eightNoteCount%8);
+        print("measure:" + quarterNoteCount/4 + ", quarter note: " + quarterNoteCount%4);
     }
     
     // Time between beats (every 8th note)
