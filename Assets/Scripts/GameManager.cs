@@ -1,16 +1,21 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Pitch(InputAction.CallbackContext context)
     {
-        
+        if (context.performed)
+        {
+            print("pitch");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Swing(InputAction.CallbackContext context)
     {
-        
+        if (context.performed)
+        {
+            print("swing");
+        }
     }
 }
