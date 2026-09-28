@@ -10,6 +10,9 @@ public class TempoManager : MonoBehaviour
     public AudioClip soundEffect;
 
     private double songStartTime;
+
+    private int currentBeat = 0;
+    private double nextBeatTime;
     
     public void Start()
     {
@@ -41,6 +44,7 @@ public class TempoManager : MonoBehaviour
         audioSource.PlayOneShot(soundEffect);
         print("beat = "+ GetCurrentBeat());
     }
+    
     private void startSong()
     {
         // play song: songAudioSource.PlayOneShot(song); once we have a song, put it here
@@ -50,20 +54,48 @@ public class TempoManager : MonoBehaviour
     {
         songStartTime = AudioSettings.dspTime;
     }
+    
     private void startMetronome()
     {
+        nextBeatTime = songStartTime + QuarterNoteInterval;
         StartCoroutine(beatInterval());
     }
-    // Time between beats (every 8th note)
+    
     private IEnumerator beatInterval()
     {
-        yield return new WaitForSeconds(getBeatsPerSecond());
-        UpdateMetronomeTick();
-        StartCoroutine(beatInterval());
+        //always updates
+        while (true)
+        {
+            //wait until next beat to run coroutine again
+            while (AudioSettings.dspTime < nextBeatTime)
+            {
+                yield return null;
+            }
+            
+            //increase tick and play sound
+            UpdateMetronomeTick(currentBeat);
+            
+            //update when the next beat is
+            nextBeatTime = songStartTime + currentBeat * QuarterNoteInterval;
+        }
     }
+    
+    public void UpdateMetronomeTick(int beat)
+    {
+        //metronome
+        audioSource.PlayOneShot(soundEffect);
+        print("beat = " + beat);
+        currentBeat++;
+    }
+    
     private float getBeatsPerSecond()
     {
         return 60f / BPM;
+    }
+    
+    public double GetBeatTime(int beat)
+    {
+        return songStartTime + (beat * QuarterNoteInterval);
     }
     
 }
