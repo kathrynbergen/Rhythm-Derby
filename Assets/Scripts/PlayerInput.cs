@@ -6,49 +6,76 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] private AccuracySnapper accuracySnapper;
     [SerializeField] private TempoManager tempoManager;
+    [SerializeField] private PitcherSpriteAnimator Pitcher;
+    [SerializeField] private BatterSpriteAnimator Batter;
+    
     private bool pitchProcessing = false;
-    public PitcherSpriteAnimator Pitcher;
-    public BatterSpriteAnimator Batter;
-
 
     private int targetPitchBeat = -1; // Intended pitch beat - for snapping
-    // Called when the player presses the button corresponding to pitching (player 1)
     
+    
+    // Called when the player presses the button corresponding to pitching (player 1)
     public void Pitch(InputAction.CallbackContext context)
     {
         if (context.performed) // Ensures method is only called once when the player presses down the button fully
         {
-            int currentBeat = tempoManager.GetCurrentBeat();
+            // Check which beat the pitcher intended to pitch at and snap input to that beat
+            int currentBeat = accuracySnapper.SnapToClosestBeat(tempoManager.GetSongTime()); 
+            print("intended beat: " + currentBeat);
+            
+            // would always round down to the previous beat, so we don't want to use this in case the player is early
+            //int currentBeat = tempoManager.GetCurrentBeat();
+            
+            int[] beatPattern = determinePitcherBeatPattern(currentBeat); 
+
+            StartCoroutine(AnimatePitch(beatPattern[0], beatPattern[1], beatPattern[2]));
+        }
+    }
+    
+    // can eventually take a parameter for the input type (ex. pressing j vs k correlates to pattern 1 vs 2)
+    // from the player to determine which beat pattern should be returned
+    private int[] determinePitcherBeatPattern(int currentBeat)
+    {
+        int [] beatPattern = new int[3];
+        
+        //pattern 1: one beat to pitch, one beat to react
+        beatPattern[0] = currentBeat;
+        beatPattern[1] = currentBeat + 1;
+        beatPattern[2] = currentBeat + 2;
+        
+        return beatPattern;
+    }
+    
+    // Called when the player presses the button corresponding to swinging (player 2)
+    public void Swing(InputAction.CallbackContext context)
+    {
+        if (context.performed) // Ensures method is only called once when the player presses down the button fully
+        {
+            int currentBeat = accuracySnapper.SnapToClosestBeat(tempoManager.GetSongTime()); 
 
             //can be easily changed for different patterns
-            int windupBeat = currentBeat;
-            int throwBeat = currentBeat + 1;
-            int idleBeat = currentBeat + 2;
-
-            StartCoroutine(AnimatePitch(windupBeat, throwBeat, idleBeat));
+            int swingBeat = currentBeat;
+            int backToIdleBeat = currentBeat + 1;
+            
+            Batter.ChangeToSwingSprite();
+            
+            StartCoroutine(AnimateSwing(swingBeat, backToIdleBeat));
+            // Check which beat the batter intended to hit at
+            // Check if they were supposed to swing on that beat
+            // Give score based on accuracy / if they were supposed to swing on that beat
         }
-
-        
-            
-            // Check which beat the pitcher intended to pitch at and snap input to that beat
-            //targetPitchBeat = accuracySnapper.SnapToClosestBeat(tempoManager.GetSongTime()); 
-            //print("targetPitchBeat: " + targetPitchBeat);
-            
     }
     
     private IEnumerator AnimatePitch(int windupBeat, int throwBeat, int idleBeat)
     {
         yield return WaitUntilBeat(windupBeat);
-        Pitcher.ChangeToWindupSprite();
-        print("Pitcher: Winding up pitch");
+        Pitcher.ChangeToWindupSprite(); // pitcher: windup
 
         yield return WaitUntilBeat(throwBeat);
-        Pitcher.ChangeToThrowingSprite();
-        print("Pitcher: Throw!");
+        Pitcher.ChangeToThrowingSprite(); // pitcher: throw
 
         yield return WaitUntilBeat(idleBeat);
-        Pitcher.ChangeToIdleSprite();
-        print("Pitcher: Back to Idle");
+        Pitcher.ChangeToIdleSprite(); // pitcher: back to idle
     }
     
     private IEnumerator WaitUntilBeat(int beat)
@@ -65,52 +92,29 @@ public class PlayerInput : MonoBehaviour
         {
             yield return null;
         }
-        Pitcher.ChangeToWindupSprite();
-        print("pitcher windup");
+        Pitcher.ChangeToWindupSprite(); // pitcher windup
         
         while (AudioSettings.dspTime < throwTime)
         {
             yield return null;
         }
-        Pitcher.ChangeToThrowingSprite();
-        print("pitcher throw");
+        Pitcher.ChangeToThrowingSprite(); // pitcher throw
         
         while (AudioSettings.dspTime < idleTime)
         {
             yield return null;
         }
-        Pitcher.ChangeToIdleSprite();
-        print("pitcher idle");
+        Pitcher.ChangeToIdleSprite(); // pitcher idle
     }
 
-    // Called when the player presses the button corresponding to swinging (player 2)
-    public void Swing(InputAction.CallbackContext context)
-    {
-        if (context.performed) // Ensures method is only called once when the player presses down the button fully
-        {
-            int currentBeat = tempoManager.GetCurrentBeat();
-
-            //can be easily changed for different patterns
-            int swingBeat = currentBeat;
-            int backToIdleBeat = currentBeat + 1;
-            
-            Batter.ChangeToSwingSprite();
-            
-            StartCoroutine(AnimateSwing(swingBeat, backToIdleBeat));
-            // Check which beat the batter intended to hit at
-            // Check if they were supposed to swing on that beat
-            // Give score based on accuracy / if they were supposed to swing on that beat
-        }
-    }
+    
 
     IEnumerator AnimateSwing(int swingBeat, int backToIdleBeat)
     {
         yield return WaitUntilBeat(swingBeat);
-        Batter.ChangeToSwingSprite();
-        print("Batter: Swing!");
+        Batter.ChangeToSwingSprite(); // batter: swing
         
         yield return WaitUntilBeat(backToIdleBeat);
-        Batter.ChangeToIdleSprite();
-        print("Batter: Back to Idle");
+        Batter.ChangeToIdleSprite(); // batter: back to idle
     }
 }

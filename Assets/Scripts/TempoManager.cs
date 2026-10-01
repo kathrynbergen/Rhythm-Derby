@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TempoManager : MonoBehaviour
 {
-    private int BPM = 68; // should be changed based on the song
+    private int BPM = 80; // should be changed based on the song
     
     // Plays metronome
     public AudioSource audioSource;
@@ -76,26 +76,27 @@ public class TempoManager : MonoBehaviour
             UpdateMetronomeTick(currentBeat);
             
             //update when the next beat is
-            nextBeatTime = songStartTime + currentBeat * QuarterNoteInterval;
+            nextBeatTime += QuarterNoteInterval;
         }
     }
     
     public void UpdateMetronomeTick(int beat)
     {
         //metronome
+        currentBeat++;
         audioSource.PlayOneShot(soundEffect);
         print("beat = " + beat);
-        currentBeat++;
     }
     
-    private float getBeatsPerSecond()
-    {
-        return 60f / BPM;
-    }
-    
+    // returns time of the beat into the song
     public double GetBeatTime(int beat)
     {
         return songStartTime + (beat * QuarterNoteInterval);
     }
     
+    // returns the time of the beat relative to the start of the song
+    public double GetBeatTimeFromStart(int beat)
+    {
+        return beat * QuarterNoteInterval;
+    }
 }
