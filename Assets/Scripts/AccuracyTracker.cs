@@ -9,11 +9,12 @@ public class AccuracyTracker : MonoBehaviour
     private double goodHitInterval = 0.25; 
     private double greatHitInterval = 0.15; 
     
+    
     [SerializeField] private PlayerData playerData;
-    public void DetermineAccuracy(double inputTime, double closestBeatTime)
+    public void DetermineAccuracy(double inputTime, double targetBeatTime)
     {
         // determine how far they were to the intended beat
-        double timeToIntendedBeat = Math.Abs(inputTime - closestBeatTime);
+        double timeToIntendedBeat = Math.Abs(inputTime - targetBeatTime);
         
         // give a rating based on how far they were
         Accuracy accuracy;
@@ -21,6 +22,7 @@ public class AccuracyTracker : MonoBehaviour
         if (timeToIntendedBeat < greatHitInterval)
         {
             accuracy = Accuracy.HomeRun;
+            
         } else if (timeToIntendedBeat < goodHitInterval)
         {
             accuracy = Accuracy.Single;
@@ -35,4 +37,6 @@ public class AccuracyTracker : MonoBehaviour
         playerData.UpdateAccuracy(accuracy);
         print("Accuracy: " + accuracy);
     }
+    
+    
 }

@@ -6,6 +6,7 @@ public class PitcherSpriteAnimator : MonoBehaviour
     public Sprite WindupSprite;
     public Sprite IdleSprite;
     public Sprite ThrowingSprite;
+    
 
     public void ChangeToWindupSprite()
     {

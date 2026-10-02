@@ -4,16 +4,23 @@ public class BatterSpriteAnimator : MonoBehaviour
 {
     public SpriteRenderer BatterSpriteRenderer;
     public Sprite IdleSprite;
-    public Sprite SwingSprite;
+    public Sprite DoneSwingingSprite;
+    public Sprite SwingingSprite;
+    
 
     public void ChangeToIdleSprite()
     {
         BatterSpriteRenderer.sprite = IdleSprite;
     }
     
-    public void ChangeToSwingSprite()
+    public void ChangeToSwingingSprite()
     {
-        BatterSpriteRenderer.sprite = SwingSprite;
+        BatterSpriteRenderer.sprite = SwingingSprite;
+    }
+    
+    public void ChangeToDoneSwingingSprite()
+    {
+        BatterSpriteRenderer.sprite = DoneSwingingSprite;
     }
     
     
