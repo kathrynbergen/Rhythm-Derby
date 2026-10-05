@@ -1,6 +1,6 @@
 public enum Accuracy
 {
-    Miss,
+    Strike,
     Single,
     HomeRun
 }

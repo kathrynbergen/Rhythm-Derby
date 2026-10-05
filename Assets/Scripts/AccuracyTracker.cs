@@ -28,7 +28,7 @@ public class AccuracyTracker : MonoBehaviour
             accuracy = Accuracy.Single;
         } else // miss
         {
-            accuracy = Accuracy.Miss;
+            accuracy = Accuracy.Strike;
         }
 
         // update pitcher/batter data
