@@ -36,7 +36,7 @@ public class PlayerData : MonoBehaviour
                 playerOneSingleCount++;
                 playerOneAccuracyScore++;
                 return;
-            case Accuracy.Miss:
+            case Accuracy.Strike:
                 playerOneMissCount++;
                 return;
             default:
