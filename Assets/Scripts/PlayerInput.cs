@@ -16,9 +16,6 @@ public class PlayerInput : MonoBehaviour
 
     private int targetPitchBeat = -1; // Intended pitch beat - for snapping
     private int targetSwingBeat = -1;
-
-
-    
     
     // Called when the player presses the button corresponding to pitching (player 1)
     public void Pitch(InputAction.CallbackContext context)
