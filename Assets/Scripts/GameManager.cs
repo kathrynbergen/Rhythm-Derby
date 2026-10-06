@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,5 +16,12 @@ public class GameManager : MonoBehaviour
         Instance = this;
         
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void StartGame(LevelData levelData)
+    {
+        AudioManager.Instance.PlayMusic(levelData.Music);
+
+        SceneManager.LoadScene("Game");
     }
 }
