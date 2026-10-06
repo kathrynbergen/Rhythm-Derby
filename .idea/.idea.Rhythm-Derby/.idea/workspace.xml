@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="11f69293-c17f-419f-8b85-14f81ee80122" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rhythm-Derby/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rhythm-Derby/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/New Piskel-1.png (2).png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/New Piskel-1.png (2).png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/New Piskel-1.png (3).png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/New Piskel-1.png (3).png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/New Piskel-2.png (1).png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/New Piskel-2.png (1).png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/New Piskel-5.png.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/New Piskel-5.png.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,19 +49,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/6000.3.22f1/Unity.app/Contents/MacOS/Unity" />
@@ -123,6 +128,10 @@
       <updated>1790113668070</updated>
       <workItem from="1790113670257" duration="328000" />
       <workItem from="1790607484620" duration="9750000" />
+      <workItem from="1791248088542" duration="628000" />
+      <workItem from="1791254112879" duration="1654000" />
+      <workItem from="1791326266018" duration="21000" />
+      <workItem from="1791326458811" duration="43000" />
     </task>
     <task id="LOCAL-00001" summary="Added SFX">
       <option name="closed" value="true" />
@@ -160,8 +169,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Added SFX" />
-    <MESSAGE value="Sprite Stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sprite Stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added SFX" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

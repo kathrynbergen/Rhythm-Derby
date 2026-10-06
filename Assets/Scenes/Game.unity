@@ -238,7 +238,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!114 &265715124
 MonoBehaviour:
@@ -722,9 +722,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatterSpriteAnimator
   BatterSpriteRenderer: {fileID: 634590457}
-  IdleSprite: {fileID: 21300000, guid: 2e9476a9a46b9407584d21a7e6a04eb0, type: 3}
+  IdleSprite: {fileID: 21300000, guid: bb0b07ff26b0949ec8cdca76ae49f9fb, type: 3}
   DoneSwingingSprite: {fileID: 21300000, guid: 44fa9eec0360446debd3c11a94e90b04, type: 3}
-  SwingingSprite: {fileID: 21300000, guid: 2152c78fbb92d49f19252848e0e47372, type: 3}
+  SwingingSprite: {fileID: 21300000, guid: 139ae80f3e6054b5d9f6fb96f4a04e92, type: 3}
 --- !u!212 &634590457
 SpriteRenderer:
   serializedVersion: 2
@@ -782,7 +782,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!4 &634590458
 Transform:
@@ -1077,7 +1077,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 3d2314875f560497784386548179837f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a89fe130ddcf44cd8bc25fe5c18e4793, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1566,7 +1566,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1494790736
 MonoBehaviour:
@@ -1582,7 +1582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PitcherSpriteAnimator
   PitcherSpriteRenderer: {fileID: 1494790735}
   WindupSprite: {fileID: 21300000, guid: 63f22fb8395cf4875a6e5f05e4fc61e2, type: 3}
-  IdleSprite: {fileID: 21300000, guid: a07788f2ca28e4d999d85ef659d51116, type: 3}
+  IdleSprite: {fileID: 21300000, guid: c60c23707fb804f05a45a8fb8ce08690, type: 3}
   ThrowingSprite: {fileID: 21300000, guid: f330bc1f1be254f6ea26fd7522a1823b, type: 3}
 --- !u!4 &1494790737
 Transform:
