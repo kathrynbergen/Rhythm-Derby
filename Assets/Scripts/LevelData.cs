@@ -5,5 +5,5 @@ public class LevelData : ScriptableObject
 {
     public string LevelName;
     public AudioClip Music;
-    public float BPM;
+    public int BPM;
 }

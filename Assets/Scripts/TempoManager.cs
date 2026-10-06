@@ -9,16 +9,10 @@ public class TempoManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip soundEffect;
 
-    private double songStartTime;
+    private double metronomeStartTime;
 
     private int currentBeat = 0;
     private double nextBeatTime;
-    
-    public void Start()
-    {
-        startSong();
-        startMetronome();
-    }
     
     // Returns the time duration of quarter note interval when called, example: float interval = tempoManager.QuarterNoteInterval
     // Not stored in case of speed ups/slow downs mid game that affect BPM - calculated when QuarterNoteInterval is referenced
@@ -36,7 +30,7 @@ public class TempoManager : MonoBehaviour
     // returns how far we are into the song
     public double GetSongTime()
     {
-        return AudioSettings.dspTime - songStartTime; // current time since game launch - time the song was started
+        return AudioSettings.dspTime - metronomeStartTime; // current time since game launch - time the song was started
     }
     // Called every interval when a "tick" is (every 8th note)
     public void UpdateMetronomeTick()
@@ -44,23 +38,18 @@ public class TempoManager : MonoBehaviour
         audioSource.PlayOneShot(soundEffect);
         print("beat = "+ GetCurrentBeat());
     }
-    
-    private void startSong()
+
+    public void UpdateBPM(int newBPM)
     {
-        // play song: songAudioSource.PlayOneShot(song); once we have a song, put it here
-        setSongStartTime();
+        BPM = newBPM;
     }
-    private void setSongStartTime()
+    public void StartMetronome(double startTime)
     {
-        songStartTime = AudioSettings.dspTime;
-    }
-    
-    private void startMetronome()
-    {
-        nextBeatTime = songStartTime + QuarterNoteInterval;
+        metronomeStartTime = startTime;
+        nextBeatTime = metronomeStartTime + QuarterNoteInterval;
+        currentBeat = 0;
         StartCoroutine(beatInterval());
     }
-    
     private IEnumerator beatInterval()
     {
         //always updates
@@ -91,7 +80,7 @@ public class TempoManager : MonoBehaviour
     // returns time of the beat into the song
     public double GetBeatTime(int beat)
     {
-        return songStartTime + (beat * QuarterNoteInterval);
+        return metronomeStartTime + (beat * QuarterNoteInterval);
     }
     
     // returns the time of the beat relative to the start of the song

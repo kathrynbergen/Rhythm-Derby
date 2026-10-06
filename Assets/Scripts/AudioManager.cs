@@ -25,9 +25,19 @@ public class AudioManager : MonoBehaviour
     {
         PlayMusic(menuMusic);
     }
+    
+    // for playing any music (menu music, lose/win music, etc)
     public void PlayMusic(AudioClip music)
     {
         audioSource.clip = music;
         audioSource.Play();
+    }
+    
+    // for playing music when you need to synchronize (like start of rhythm game song)
+    public void PlayMusic(AudioClip music, double startTime)
+    {
+        audioSource.Stop();
+        audioSource.clip = music;
+        audioSource.PlayScheduled(startTime);
     }
 }
