@@ -16,7 +16,5 @@ public class AccuracySnapper : MonoBehaviour
         int closestBeat = Mathf.RoundToInt((float)(inputTime / interval));
         
         return closestBeat;
-
-        // determine accuracy
     }
 }

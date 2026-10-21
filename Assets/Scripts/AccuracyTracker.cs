@@ -4,10 +4,12 @@ using UnityEngine;
 // Determines player scoring (how close were they to the intended beat?)
 public class AccuracyTracker : MonoBehaviour
 {
+    [SerializeField] private PopupManager popup;
+    
     // consideration for future: should they change based on BPM? if so, how significantly?
     // times are in seconds 
-    private double goodHitInterval = 0.25; 
-    private double greatHitInterval = 0.15; 
+    private double goodHitInterval = 0.20; 
+    private double greatHitInterval = 0.10; 
     
     
     [SerializeField] private PlayerData playerData;
@@ -35,8 +37,7 @@ public class AccuracyTracker : MonoBehaviour
         
         // fixme- update PlayerData here - pass in accuracy as a parameter
         playerData.UpdateAccuracy(accuracy);
-        print("Accuracy: " + accuracy);
+        popup.AccuracyPopup(accuracy);
     }
-    
     
 }
