@@ -29,9 +29,6 @@ public class PlayerInput : MonoBehaviour
             beatPattern = determinePitcherBeatPattern(currentBeat); 
             targetSwingBeat = beatPattern[1];
             
-            // would always round down to the previous beat, so we don't want to use this in case the player is early
-            //int currentBeat = tempoManager.GetCurrentBeat();
-            
             StartCoroutine(AnimatePitch(beatPattern[0], beatPattern[1], beatPattern[2]));
         }
     }
@@ -43,9 +40,9 @@ public class PlayerInput : MonoBehaviour
         int [] beatPattern = new int[3];
         
         //pattern 1: one beat to pitch, one beat to react
-        beatPattern[0] = currentBeat;
-        beatPattern[1] = currentBeat + 1;
-        beatPattern[2] = currentBeat + 2;
+        beatPattern[0] = currentBeat; // windup
+        beatPattern[1] = currentBeat + 1; // throw (batter hits here)
+        beatPattern[2] = currentBeat + 2; // back to idle
         
         return beatPattern;
     }
@@ -68,9 +65,6 @@ public class PlayerInput : MonoBehaviour
             Batter.ChangeToDoneSwingingSprite();
             
             StartCoroutine(AnimateSwing(swingBeat, backToIdleBeat));
-            // Check which beat the batter intended to hit at
-            // Check if they were supposed to swing on that beat
-            // Give score based on accuracy / if they were supposed to swing on that beat
         }
     }
     
@@ -102,13 +96,10 @@ public class PlayerInput : MonoBehaviour
 
     IEnumerator AnimateSwing(int swingBeat, int backToIdleBeat)
     {
-        
-        
         yield return WaitUntilBeat(swingBeat);
         Batter.ChangeToSwingingSprite();
         yield return new WaitForSeconds(0.1f);
         Batter.ChangeToDoneSwingingSprite(); // batter: swing
-        
         
         yield return WaitUntilBeat(backToIdleBeat);
         Batter.ChangeToIdleSprite(); // batter: back to idle

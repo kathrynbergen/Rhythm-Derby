@@ -1091,7 +1091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a000851b967efb4d9fc8ce33cbf6244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSelect
-  testLevelData: {fileID: 11400000, guid: 1879b3996d1698c42b3f829d0982d446, type: 2}
+  testLevelData: {fileID: 11400000, guid: cec92f282126bcc4b9e98cfd93f6c675, type: 2}
 --- !u!4 &1941591124
 Transform:
   m_ObjectHideFlags: 0
