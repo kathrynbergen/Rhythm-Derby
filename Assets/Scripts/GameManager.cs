@@ -1,11 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get;  private set; }
-
+    
+    public GameState CurrentState;
+    public GameState PlayingState;
+    
     private LevelData currentLevelData;
+    
 
     public void Awake()
     {
@@ -17,12 +22,35 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        PlayingState = new GameState(this);
+        CurrentState = PlayingState;
         
         DontDestroyOnLoad(gameObject);
         
         // subscribes OnSceneLoaded to scene loading event
         // means that whenever a scene is done loading, OnSceneLoaded is called
         SceneManager.sceneLoaded += OnSceneLoaded; 
+    }
+
+    private void Update()
+    {
+        if (CurrentState != null)
+        {
+            CurrentState.StateUpdate();
+        }
+
+        CurrentState.StateUpdate();
+    }
+
+    public void ChangeState(GameState newState)
+    {
+        if (null != CurrentState)
+        {
+            CurrentState.OnMyStateExited();
+        }
+        
+        CurrentState = newState;
+        CurrentState.OnMyStateEntered();
     }
 
     public void StartGame(LevelData levelData)

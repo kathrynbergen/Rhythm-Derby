@@ -16,7 +16,17 @@ public class PlayerInput : MonoBehaviour
 
     private int targetPitchBeat = -1; // Intended pitch beat - for snapping
     private int targetSwingBeat = -1;
-    
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (!context.performed || GameManager.Instance == null)
+            return;
+
+        if (GameManager.Instance.CurrentState is StateGamePaused) // unpause if already paused
+            GameManager.Instance.ChangeState(GameManager.Instance.PlayingState);
+        else // enter pause state
+            GameManager.Instance.ChangeState(new StateGamePaused(GameManager.Instance));
+    }
     // Called when the player presses the button corresponding to pitching (player 1)
     public void Pitch(InputAction.CallbackContext context)
     {

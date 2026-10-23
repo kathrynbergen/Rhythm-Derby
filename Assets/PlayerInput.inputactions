@@ -25,13 +25,23 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "f347612b-87fd-42fc-99a2-d5489e00f7d6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "bbd6ebdb-1d99-4169-92fa-a0dabec7e7c5",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -53,7 +63,7 @@
                 {
                     "name": "",
                     "id": "ccea2a25-e9ae-441d-805f-3babec12cbfd",
-                    "path": "<Keyboard>/j",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -69,6 +79,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Swing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23bf74da-1cf6-4209-a3c5-4f903cffd401",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e57032bf-95ac-4661-b97f-e271be6a8097",
+                    "path": "<DualShockGamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
