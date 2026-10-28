@@ -19,6 +19,20 @@ public class PlayerData : MonoBehaviour
     private int playerTwoHomeRunCount = 0;
     private int playerTwoSingleCount = 0;
     private int playerTwoMissCount = 0;
+
+    public void ResetRun()
+    {
+        playerOneAccuracyScore = 0;
+        playerTwoAccuracyScore = 0;
+        playerOneInputCount = 0;
+        playerTwoInputCount = 0;
+        playerOneHomeRunCount = 0;
+        playerOneSingleCount = 0;
+        playerOneMissCount = 0;
+        playerTwoHomeRunCount = 0;
+        playerTwoSingleCount = 0;
+        playerTwoMissCount = 0;
+    }
     
     public void UpdateAccuracy(Accuracy accuracy)
     {

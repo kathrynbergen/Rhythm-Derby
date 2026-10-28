@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,7 +22,6 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         PlayingState = new GameState(this);
-        CurrentState = PlayingState;
         
         DontDestroyOnLoad(gameObject);
         
@@ -39,7 +37,6 @@ public class GameManager : MonoBehaviour
             CurrentState.StateUpdate();
         }
 
-        CurrentState.StateUpdate();
     }
 
     public void ChangeState(GameState newState)
@@ -50,38 +47,54 @@ public class GameManager : MonoBehaviour
         }
         
         CurrentState = newState;
-        CurrentState.OnMyStateEntered();
+        CurrentState?.OnMyStateEntered();
     }
 
-    public void StartGame(LevelData levelData)
+    public void RequestLevelStart(LevelData levelData)
     {
-        currentLevelData = levelData; // Used to hold onto current level selected when moving to next scene
+        if (levelData == null)
+        {
+            Debug.LogError("Cannot start a level without LevelData.");
+            return;
+        }
 
-        SceneManager.LoadScene("Game");
+        currentLevelData = levelData;
+        ChangeState(new EnteringLevelState(this));
     }
     // every time the level is loaded, method is called
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Game")
         {
-            SetupLevel();
+            if (CurrentState is EnteringLevelState enteringLevelState)
+                enteringLevelState.SetupLoadedLevel();
         }
     }
-    private void SetupLevel()
+    internal bool SetupLevel()
     {
         TempoManager tempoManager = FindFirstObjectByType<TempoManager>();
         
         if (tempoManager != null)
         {
             // Update metronome and start song
+            ResetRunData();
+            tempoManager.ResetForNewRun();
             tempoManager.UpdateBPM(currentLevelData.BPM);
             double startTime = AudioSettings.dspTime + 0.1; // starts .1 second after loading
             AudioManager.Instance.PlayMusic(currentLevelData.Music, startTime);
             tempoManager.StartMetronome(startTime); 
+            return true;
         } else
         {
             Debug.Log("couldn't find TempoManager in GameManager.SetupLevel()");
-            return;
+            return false;
         }
+    }
+
+    private void ResetRunData()
+    {
+        PlayerData playerData = FindFirstObjectByType<PlayerData>();
+        if (playerData != null)
+            playerData.ResetRun();
     }
 }

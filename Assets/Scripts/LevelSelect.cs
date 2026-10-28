@@ -6,6 +6,6 @@ public class LevelButton : MonoBehaviour
 
     public void StartTestLevel()
     {
-        GameManager.Instance.StartGame(testLevelData);
+        GameManager.Instance.RequestLevelStart(testLevelData);
     }
 }

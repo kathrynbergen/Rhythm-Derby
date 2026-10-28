@@ -45,10 +45,21 @@ public class TempoManager : MonoBehaviour
     }
     public void StartMetronome(double startTime)
     {
+        StopAllCoroutines();
         metronomeStartTime = startTime;
         nextBeatTime = metronomeStartTime + QuarterNoteInterval;
         currentBeat = 0;
         StartCoroutine(beatInterval());
+    }
+
+    public void ResetForNewRun()
+    {
+        StopAllCoroutines();
+        currentBeat = 0;
+        nextBeatTime = 0;
+        metronomeStartTime = 0;
+        if (audioSource != null)
+            audioSource.Stop();
     }
     private IEnumerator beatInterval()
     {
