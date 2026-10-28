@@ -30,6 +30,8 @@ public class PlayerInput : MonoBehaviour
     // Called when the player presses the button corresponding to pitching (player 1)
     public void Pitch(InputAction.CallbackContext context)
     {
+        if(InputsAreLocked()) return; // won't let you pitch if in pause state/loading into level
+            
         if (context.performed) // Ensures method is only called once when the player presses down the button fully
         {
             // Check which beat the pitcher intended to pitch at and snap input to that beat
@@ -60,6 +62,8 @@ public class PlayerInput : MonoBehaviour
     // Called when the player presses the button corresponding to swinging (player 2)
     public void Swing(InputAction.CallbackContext context)
     {
+        if(InputsAreLocked()) return; // won't let you pitch if in pause state/loading into level
+        
         if (context.performed) // Ensures method is only called once when the player presses down the button fully
         {
             double inputTime = tempoManager.GetSongTime();
@@ -113,5 +117,12 @@ public class PlayerInput : MonoBehaviour
         
         yield return WaitUntilBeat(backToIdleBeat);
         Batter.ChangeToIdleSprite(); // batter: back to idle
+    }
+
+    private bool InputsAreLocked()
+    {
+        // Gameplay input is available only after the countdown, while actively playing.
+        return GameManager.Instance == null ||
+               !(GameManager.Instance.CurrentState is PlayingGameState);
     }
 }

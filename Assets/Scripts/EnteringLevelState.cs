@@ -1,3 +1,5 @@
+using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EnteringLevelState : GameState
@@ -13,13 +15,21 @@ public class EnteringLevelState : GameState
 
     public void SetupLoadedLevel()
     {
-        if (levelSetupComplete)
-            return;
-
-        if (!gameManager.SetupLevel())
-            return;
+        if (levelSetupComplete) return;
 
         levelSetupComplete = true;
+        gameManager.StartCoroutine(CountIntoLevel());
+    }
+
+    private IEnumerator CountIntoLevel()
+    {
+        Debug.Log("3...");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("2...");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("1...");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Start!");
         gameManager.ChangeState(gameManager.PlayingState);
     }
 }

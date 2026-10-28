@@ -58,8 +58,7 @@ public class TempoManager : MonoBehaviour
         currentBeat = 0;
         nextBeatTime = 0;
         metronomeStartTime = 0;
-        if (audioSource != null)
-            audioSource.Stop();
+        if (audioSource != null) audioSource.Stop();
     }
     private IEnumerator beatInterval()
     {
