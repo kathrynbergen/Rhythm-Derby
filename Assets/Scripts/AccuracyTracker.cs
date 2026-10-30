@@ -34,10 +34,14 @@ public class AccuracyTracker : MonoBehaviour
         }
 
         // update pitcher/batter data
-        
-        // fixme- update PlayerData here - pass in accuracy as a parameter
         playerData.UpdateAccuracy(accuracy);
         popup.AccuracyPopup(accuracy);
+
+        if (playerData.GetPlayerMissCount() >= 3)
+        {
+            print("3 strikes!");
+            GameManager.Instance.ChangeState(new EndGameState(GameManager.Instance));
+        }
     }
     
 }

@@ -11,7 +11,6 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private BallAnimator Ball;
     [SerializeField] private AccuracyTracker accuracyTracker;
     
-    private bool pitchProcessing = false;
     private int[] beatPattern;
 
     private int targetPitchBeat = -1; // Intended pitch beat - for snapping
@@ -27,22 +26,16 @@ public class PlayerInput : MonoBehaviour
         else // enter pause state
             GameManager.Instance.ChangeState(new StateGamePaused(GameManager.Instance));
     }
-    // Called when the player presses the button corresponding to pitching (player 1)
+    // Player one always uses J. Which play J triggers depends on the current half.
     public void Pitch(InputAction.CallbackContext context)
     {
-        if(InputsAreLocked()) return; // won't let you pitch if in pause state/loading into level
-            
-        if (context.performed) // Ensures method is only called once when the player presses down the button fully
-        {
-            // Check which beat the pitcher intended to pitch at and snap input to that beat
-            int currentBeat = accuracySnapper.SnapToClosestBeat(tempoManager.GetSongTime()); 
-            print("intended beat: " + currentBeat);
-            
-            beatPattern = determinePitcherBeatPattern(currentBeat); 
-            targetSwingBeat = beatPattern[1];
-            
-            StartCoroutine(AnimatePitch(beatPattern[0], beatPattern[1], beatPattern[2]));
-        }
+        if (!context.performed || InputsAreLocked()) return;
+
+        PlayerData data = FindPlayerData();
+        if (data == null) return;
+
+        if (data.PlayerOneIsPitching) StartPitch();
+        else StartSwing();
     }
     
     // can eventually take a parameter for the input type (ex. pressing j vs k correlates to pattern 1 vs 2)
@@ -59,27 +52,42 @@ public class PlayerInput : MonoBehaviour
         return beatPattern;
     }
     
-    // Called when the player presses the button corresponding to swinging (player 2)
+    // Player two always uses F. Which play F triggers depends on the current half.
     public void Swing(InputAction.CallbackContext context)
     {
-        if(InputsAreLocked()) return; // won't let you pitch if in pause state/loading into level
-        
-        if (context.performed) // Ensures method is only called once when the player presses down the button fully
-        {
-            double inputTime = tempoManager.GetSongTime();
-            double targetTime = tempoManager.GetBeatTimeFromStart(targetSwingBeat);
-            accuracyTracker.DetermineAccuracy(inputTime, targetTime);
-            
-            int currentBeat = accuracySnapper.SnapToClosestBeat(tempoManager.GetSongTime());
+        if (!context.performed || InputsAreLocked()) return;
 
-            //can be easily changed for different patterns
-            int swingBeat = currentBeat;
-            int backToIdleBeat = currentBeat + 1;
-            
-            Batter.ChangeToDoneSwingingSprite();
-            
-            StartCoroutine(AnimateSwing(swingBeat, backToIdleBeat));
-        }
+        PlayerData data = FindPlayerData();
+        if (data == null) return;
+
+        if (data.PlayerOneIsPitching) StartSwing();
+        else StartPitch();
+    }
+
+    private void StartPitch()
+    {
+        int currentBeat = accuracySnapper.SnapToClosestBeat(tempoManager.GetSongTime());
+        print("intended beat: " + currentBeat);
+
+        beatPattern = determinePitcherBeatPattern(currentBeat);
+        targetSwingBeat = beatPattern[1];
+        StartCoroutine(AnimatePitch(beatPattern[0], beatPattern[1], beatPattern[2]));
+    }
+
+    private void StartSwing()
+    {
+        double inputTime = tempoManager.GetSongTime();
+        double targetTime = tempoManager.GetBeatTimeFromStart(targetSwingBeat);
+        accuracyTracker.DetermineAccuracy(inputTime, targetTime);
+
+        int currentBeat = accuracySnapper.SnapToClosestBeat(inputTime);
+        Batter.ChangeToDoneSwingingSprite();
+        StartCoroutine(AnimateSwing(currentBeat, currentBeat + 1));
+    }
+
+    private PlayerData FindPlayerData()
+    {
+        return Object.FindFirstObjectByType<PlayerData>();
     }
     
     private IEnumerator AnimatePitch(int windupBeat, int throwBeat, int idleBeat)

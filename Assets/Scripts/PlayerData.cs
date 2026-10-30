@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 // playerdata can count # of misses("outs")/single/homeruns and store % accuracy score
 public class PlayerData : MonoBehaviour
 {
+    public bool PlayerOneIsPitching = true; // player one pitches first
+    private int inningStrikeCount;
     // Percentage corresponding with correct notes hit
     private float playerOneAccuracyScore = 0;
     private float playerTwoAccuracyScore = 0;
@@ -22,6 +25,8 @@ public class PlayerData : MonoBehaviour
 
     public void ResetRun()
     {
+        PlayerOneIsPitching = true;
+        inningStrikeCount = 0;
         playerOneAccuracyScore = 0;
         playerTwoAccuracyScore = 0;
         playerOneInputCount = 0;
@@ -36,28 +41,38 @@ public class PlayerData : MonoBehaviour
     
     public void UpdateAccuracy(Accuracy accuracy)
     {
-        // TEMP - treats player 1 as pitcher, player 2 as batter - update and add a check for
-        // who is pitching when we add the "swap sides" mechanic
-
-        // FIXME - only updating player1 now regardless of p1 or p2 who hit it. change this.
+        bool batterIsPlayerOne = !PlayerOneIsPitching;
         switch (accuracy)
         {
             case Accuracy.HomeRun:
-                playerOneHomeRunCount++;
-                playerOneAccuracyScore++;
+                if (batterIsPlayerOne) { playerOneHomeRunCount++; playerOneAccuracyScore++; }
+                else { playerTwoHomeRunCount++; playerTwoAccuracyScore++; }
                 return;
             case Accuracy.Single:
-                playerOneSingleCount++;
-                playerOneAccuracyScore++;
+                if (batterIsPlayerOne) { playerOneSingleCount++; playerOneAccuracyScore += 0.5f; }
+                else { playerTwoSingleCount++; playerTwoAccuracyScore += 0.5f; }
                 return;
             case Accuracy.Strike:
-                playerOneMissCount++;
+                inningStrikeCount++;
+                if (batterIsPlayerOne) playerOneMissCount++;
+                else playerTwoMissCount++;
                 return;
             default:
                 Debug.Log("Unrecognized accuracy");
                 return;
         }
 
+    }
+
+    public int GetPlayerMissCount()
+    {
+        return inningStrikeCount;
+    }
+
+    public void SwapSidesAndResetInning()
+    {
+        PlayerOneIsPitching = !PlayerOneIsPitching;
+        inningStrikeCount = 0;
     }
     
 }

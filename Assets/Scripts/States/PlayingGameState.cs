@@ -20,9 +20,6 @@ public class PlayingGameState : GameState
             return;
         }
 
-        PlayerData playerData = Object.FindFirstObjectByType<PlayerData>();
-        if (playerData != null) playerData.ResetRun();
-
         tempoManager.ResetForNewRun();
         tempoManager.UpdateBPM(levelData.BPM);
 

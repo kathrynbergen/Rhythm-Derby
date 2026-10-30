@@ -760,7 +760,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 98ad069e-2703-4d32-a992-c5cdadd11b7c
-    m_ActionName: 'Game/Pitch[/Keyboard/f]'
+    m_ActionName: 'Game/Pitch[/Keyboard/j]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 561744765}
@@ -776,7 +776,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: a6f9c561-576c-4e4c-a3e4-e40697e6dcca
-    m_ActionName: 'Game/Swing[/Keyboard/j]'
+    m_ActionName: 'Game/Swing[/Keyboard/f]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 561744765}
