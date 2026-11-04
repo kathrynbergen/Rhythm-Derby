@@ -112,8 +112,7 @@ public class PlayerInput : MonoBehaviour
     {
         double targetTime = tempoManager.GetBeatTime(beat);
 
-        while (AudioSettings.dspTime < targetTime)
-            yield return null;
+        while (AudioSettings.dspTime < targetTime) yield return null;
     }
 
     IEnumerator AnimateSwing(int swingBeat, int backToIdleBeat)
@@ -129,8 +128,7 @@ public class PlayerInput : MonoBehaviour
 
     private bool InputsAreLocked()
     {
-        // Gameplay input is available only after the countdown, while actively playing.
-        return GameManager.Instance == null ||
-               !(GameManager.Instance.CurrentState is PlayingGameState);
+        // locks inputs until after the countdown
+        return GameManager.Instance == null || !(GameManager.Instance.CurrentState is PlayingGameState);
     }
 }
