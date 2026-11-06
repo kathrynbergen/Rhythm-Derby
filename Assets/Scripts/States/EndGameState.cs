@@ -17,6 +17,7 @@ public class EndGameState : GameState
             foreach (SpriteAnimator spriteAnimator in Object.FindObjectsByType<SpriteAnimator>(FindObjectsSortMode.None))
             {
                 spriteAnimator.SwapSides();
+                // move popup too fixme-
             }
 
             Debug.Log("Three strikes. Swap sides: player two pitches, player one bats.");
