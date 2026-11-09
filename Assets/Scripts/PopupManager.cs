@@ -35,11 +35,10 @@ public class PopupManager : MonoBehaviour
 
     public void SwapSides()
     {
-        print("before:"+popupImage.transform.position);
-        Vector3 currentPosition = popupImage.transform.position;
-        currentPosition.x *= -1f;
-        popupImage.transform.position = currentPosition;
-        print("after:"+popupImage.transform.position);
+        RectTransform imageRectTransform = popupImage.rectTransform;
+        Vector2 anchoredPosition = imageRectTransform.anchoredPosition;
+        anchoredPosition.x *= -1f;
+        imageRectTransform.anchoredPosition = anchoredPosition;
     }
     private void SetImageAlpha(float alphaValue)
     {
