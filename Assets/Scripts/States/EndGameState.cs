@@ -3,6 +3,7 @@ using UnityEngine;
 public class EndGameState : GameState
 {
     private Canvas endGameCanvas;
+    private PopupManager popupManager;
     public EndGameState(GameManager manager) : base(manager) { }
 
     public override void OnMyStateEntered()
@@ -17,9 +18,10 @@ public class EndGameState : GameState
             foreach (SpriteAnimator spriteAnimator in Object.FindObjectsByType<SpriteAnimator>(FindObjectsSortMode.None))
             {
                 spriteAnimator.SwapSides();
-                // move popup too fixme-
             }
-
+            // move popup
+            if (popupManager == null) popupManager = Object.FindFirstObjectByType<PopupManager>();
+            popupManager.SwapSides();
             Debug.Log("Three strikes. Swap sides: player two pitches, player one bats.");
             gameManager.ChangeState(gameManager.PlayingState);
         }

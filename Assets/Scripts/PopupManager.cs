@@ -32,6 +32,15 @@ public class PopupManager : MonoBehaviour
                 break;
         }
     }
+
+    public void SwapSides()
+    {
+        print("before:"+popupImage.transform.position);
+        Vector3 currentPosition = popupImage.transform.position;
+        currentPosition.x *= -1f;
+        popupImage.transform.position = currentPosition;
+        print("after:"+popupImage.transform.position);
+    }
     private void SetImageAlpha(float alphaValue)
     {
         Color tempColor = popupImage.color;
