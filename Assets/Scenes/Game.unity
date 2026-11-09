@@ -1328,9 +1328,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatterSpriteAnimator
   SpriteRenderer: {fileID: 634590457}
-  IdleSprite: {fileID: 21300000, guid: bb0b07ff26b0949ec8cdca76ae49f9fb, type: 3}
-  doneSwingingSprite: {fileID: 21300000, guid: 44fa9eec0360446debd3c11a94e90b04, type: 3}
-  swingingSprite: {fileID: 21300000, guid: 139ae80f3e6054b5d9f6fb96f4a04e92, type: 3}
+  IdleSprite: {fileID: 21300000, guid: 3c4e79910d35c43bbbe024b60936520e, type: 3}
+  doneSwingingSprite: {fileID: 21300000, guid: ad00cb815300a4635acaa61b6a24e274, type: 3}
+  swingingSprite: {fileID: 21300000, guid: b8f07f3f8d28b4c0792ff06b903a2723, type: 3}
 --- !u!212 &634590457
 SpriteRenderer:
   serializedVersion: 2
@@ -1380,7 +1380,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: bb0b07ff26b0949ec8cdca76ae49f9fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c4e79910d35c43bbbe024b60936520e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1399,9 +1399,9 @@ Transform:
   m_GameObject: {fileID: 634590455}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -7.2, y: 0, z: 0}
+  m_LocalScale: {x: 1.02, y: 1.02, z: 1.02}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1837,8 +1837,8 @@ Transform:
   m_GameObject: {fileID: 1026005142}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -0.27, z: 0}
-  m_LocalScale: {x: 15.42, y: 4.65, z: 1}
+  m_LocalPosition: {x: 0.2, y: 0, z: 0}
+  m_LocalScale: {x: 1.7, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1892,7 +1892,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: a89fe130ddcf44cd8bc25fe5c18e4793, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b07af2b2bbccb4c23b156ef177358ba3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2532,7 +2532,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: c60c23707fb804f05a45a8fb8ce08690, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 21c4c29d5d19a406aaea48975e4aedd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2555,9 +2555,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PitcherSpriteAnimator
   SpriteRenderer: {fileID: 1494790735}
-  IdleSprite: {fileID: 21300000, guid: c60c23707fb804f05a45a8fb8ce08690, type: 3}
-  windupSprite: {fileID: 21300000, guid: 63f22fb8395cf4875a6e5f05e4fc61e2, type: 3}
-  throwingSprite: {fileID: 21300000, guid: f330bc1f1be254f6ea26fd7522a1823b, type: 3}
+  IdleSprite: {fileID: 21300000, guid: 21c4c29d5d19a406aaea48975e4aedd6, type: 3}
+  windupSprite: {fileID: 21300000, guid: c10690568b81640da999064d9d008e51, type: 3}
+  throwingSprite: {fileID: 21300000, guid: f0f64ad03d76645b2b6bff81a6ddf3f8, type: 3}
 --- !u!4 &1494790737
 Transform:
   m_ObjectHideFlags: 0
@@ -2567,8 +2567,8 @@ Transform:
   m_GameObject: {fileID: 1494790734}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: 0}
-  m_LocalScale: {x: 6.4, y: 6.4, z: 6.4}
+  m_LocalPosition: {x: 7.2, y: 0, z: 0}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
