@@ -17,16 +17,26 @@ public static class GameUI
             text.text = $"Combo: {combo}";
         }
     }
-
-    public static void UpdateComboDisplays(int playerOneCombo, int playerTwoCombo)
-    {
-        UpdateComboDisplay(true, playerOneCombo);
-        UpdateComboDisplay(false, playerTwoCombo);
-    }
+    
     public static void UpdateInningDisplay(int inning)
     {
         TMP_Text text = FindText("CurrentInning-Text");
-        if (text != null) text.text = $"Inning: {inning}";
+        if (text != null)
+        {
+            if (inning == 1) text.text = $"{inning}st Inning";
+            else if (inning == 2) text.text = $"{inning}nd Inning";
+            else if (inning == 3) text.text = $"{inning}rd Inning";
+            else text.text = $"{inning}th Inning";
+        }
+    }
+
+    public static void UpdateStrikesDisplay(int strikes)
+    {
+        TMP_Text text = FindText("Strikes-Text");
+        if (text != null)
+        {
+            text.text = $"Strikes: {strikes}";
+        }
     }
 
     public static void UpdatePlayerAccuracyDisplay(bool playerOne, int accuracyPercent)

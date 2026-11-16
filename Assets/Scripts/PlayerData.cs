@@ -49,6 +49,7 @@ public class PlayerData : MonoBehaviour
         playerTwoMaxCombo = 0;
         GameUI.UpdatePlayerAccuracyDisplays(GetAccuracyPercent(playerOneAccuracyScore, playerOneInputCount), GetAccuracyPercent(playerTwoAccuracyScore, playerTwoInputCount));
         GameUI.UpdatePitchingAndBattingAccuracyTextStyles(PlayerOneIsPitching);
+        GameUI.UpdateStrikesDisplay(inningStrikeCount);
         GameUI.UpdateComboDisplay(true, 0);
         GameUI.UpdateComboDisplay(false, 0);
     }
@@ -91,6 +92,7 @@ public class PlayerData : MonoBehaviour
                 break;
             case Accuracy.Strike:
                 inningStrikeCount++;
+                GameUI.UpdateStrikesDisplay(inningStrikeCount);
                 if (batterIsPlayerOne)
                 {
                     playerOneMissCount++;
@@ -166,6 +168,7 @@ public class PlayerData : MonoBehaviour
     {
         PlayerOneIsPitching = !PlayerOneIsPitching;
         inningStrikeCount = 0;
+        GameUI.UpdateStrikesDisplay(inningStrikeCount);
         GameUI.UpdatePitchingAndBattingAccuracyTextStyles(PlayerOneIsPitching);
     }
     
