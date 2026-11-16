@@ -37,31 +37,70 @@ public class PlayerData : MonoBehaviour
         playerTwoHomeRunCount = 0;
         playerTwoSingleCount = 0;
         playerTwoMissCount = 0;
+        GameUI.UpdatePlayerAccuracyDisplays(GetAccuracyPercent(playerOneAccuracyScore, playerOneInputCount), GetAccuracyPercent(playerTwoAccuracyScore, playerTwoInputCount));
+        GameUI.UpdatePitchingAndBattingAccuracyTextStyles(PlayerOneIsPitching);
     }
     
     public void UpdateAccuracy(Accuracy accuracy)
     {
         bool batterIsPlayerOne = !PlayerOneIsPitching;
+        if (batterIsPlayerOne) playerOneInputCount++;
+        else playerTwoInputCount++;
+
         switch (accuracy)
         {
             case Accuracy.HomeRun:
                 if (batterIsPlayerOne) { playerOneHomeRunCount++; playerOneAccuracyScore++; }
                 else { playerTwoHomeRunCount++; playerTwoAccuracyScore++; }
-                return;
+                break;
             case Accuracy.Single:
                 if (batterIsPlayerOne) { playerOneSingleCount++; playerOneAccuracyScore += 0.5f; }
                 else { playerTwoSingleCount++; playerTwoAccuracyScore += 0.5f; }
-                return;
+                break;
             case Accuracy.Strike:
                 inningStrikeCount++;
                 if (batterIsPlayerOne) playerOneMissCount++;
                 else playerTwoMissCount++;
-                return;
+                break;
             default:
                 Debug.Log("Unrecognized accuracy");
                 return;
         }
 
+        GameUI.UpdatePlayerAccuracyDisplay(batterIsPlayerOne, GetAccuracyPercent(batterIsPlayerOne ? playerOneAccuracyScore : playerTwoAccuracyScore, batterIsPlayerOne ? playerOneInputCount : playerTwoInputCount));
+    }
+
+    private static int GetAccuracyPercent(float score, int inputCount)
+    {
+        return inputCount == 0 ? 100 : Mathf.RoundToInt(score / inputCount * 100f);
+    }
+
+    public int GetPlayerOneAccuracyPercent()
+    {
+        return GetAccuracyPercent(playerOneAccuracyScore, playerOneInputCount);
+    }
+
+    public int GetPlayerTwoAccuracyPercent()
+    {
+        return GetAccuracyPercent(playerTwoAccuracyScore, playerTwoInputCount);
+    }
+    public float GetPlayerOneAccuracy()
+    {
+        return GetAccuracy(playerOneAccuracyScore, playerOneInputCount);
+    }
+
+    public float GetPlayerTwoAccuracy()
+    {
+        return GetAccuracy(playerTwoAccuracyScore, playerTwoInputCount);
+    }
+
+    private static float GetAccuracy(float score, int inputCount)
+    {
+        if (inputCount == 0)
+        {
+            return 1f;
+        }
+        return score / inputCount;
     }
 
     public int GetPlayerMissCount()
@@ -73,6 +112,7 @@ public class PlayerData : MonoBehaviour
     {
         PlayerOneIsPitching = !PlayerOneIsPitching;
         inningStrikeCount = 0;
+        GameUI.UpdatePitchingAndBattingAccuracyTextStyles(PlayerOneIsPitching);
     }
     
 }

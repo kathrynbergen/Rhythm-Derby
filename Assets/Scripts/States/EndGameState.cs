@@ -39,6 +39,15 @@ public class EndGameState : GameState
 
     private void GameOver()
     {
+        PlayerData data = Object.FindFirstObjectByType<PlayerData>();
+        if (data != null)
+        {
+            float playerOneAccuracy = data.GetPlayerOneAccuracy();
+            float playerTwoAccuracy = data.GetPlayerTwoAccuracy();
+            GameUI.ShowFinalResults(data.GetPlayerOneAccuracyPercent(), data.GetPlayerTwoAccuracyPercent(),
+                playerOneAccuracy > playerTwoAccuracy, Mathf.Approximately(playerOneAccuracy, playerTwoAccuracy));
+        }
+
         if (endGameCanvas == null)
         {
             foreach (Canvas candidate in Object.FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None))

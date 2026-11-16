@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +11,6 @@ public class GameManager : MonoBehaviour
     private LevelData currentLevelData;
     private int inningsToPlay = 1;
     private int completedInnings;
-    private TMP_Text currentInningText;
     
 
     public void Awake()
@@ -74,35 +72,15 @@ public class GameManager : MonoBehaviour
     public bool CompleteInning()
     {
         completedInnings++;
-        UpdateCurrentInningText();
+        GameUI.UpdateInningDisplay(Mathf.Min(completedInnings + 1, inningsToPlay));
         return completedInnings >= inningsToPlay;
-    }
-
-    private void UpdateCurrentInningText()
-    {
-        if (currentInningText == null)
-        {
-            foreach (TMP_Text text in FindObjectsByType<TMP_Text>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-            {
-                if (text.gameObject.name != "CurrentInning-Text") continue;
-                currentInningText = text;
-                break;
-            }
-        }
-
-        if (currentInningText != null)
-        {
-            int currentInning = Mathf.Min(completedInnings + 1, inningsToPlay);
-            currentInningText.text = $"Inning: {currentInning}";
-        }
     }
     // every time the level is loaded, method is called
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Game")
         {
-            currentInningText = null;
-            UpdateCurrentInningText();
+            GameUI.UpdateInningDisplay(Mathf.Min(completedInnings + 1, inningsToPlay));
             if (CurrentState is EnteringLevelState enteringLevelState) enteringLevelState.SetupLoadedLevel();
         }
     }
