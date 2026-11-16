@@ -5,9 +5,24 @@ public static class GameUI
 {
     private static float ActiveAccuracyFontSize = 50f;
     private static float InactiveAccuracyFontSize = 35f;
-    private static Color ActiveAccuracyColor = Color.black;
-    private static Color InactiveAccuracyColor = Color.gray;
+    private static Color ActiveAccuracyColor = Color.white;
+    private static Color InactiveAccuracyColor = Color.black;
 
+    public static void UpdateComboDisplay(bool playerOne, int combo)
+    {
+        string objectName = playerOne ? "PlayerOneCombo-Text" : "PlayerTwoCombo-Text";
+        TMP_Text text = FindText(objectName);
+        if (text != null)
+        {
+            text.text = $"Combo: {combo}";
+        }
+    }
+
+    public static void UpdateComboDisplays(int playerOneCombo, int playerTwoCombo)
+    {
+        UpdateComboDisplay(true, playerOneCombo);
+        UpdateComboDisplay(false, playerTwoCombo);
+    }
     public static void UpdateInningDisplay(int inning)
     {
         TMP_Text text = FindText("CurrentInning-Text");
@@ -21,16 +36,20 @@ public static class GameUI
         if (text != null)
         {
             text.text = $"Accuracy: {accuracyPercent}%";
-            SetAccuracyStyle(text, true);
+            SetTextStyle(text, true);
         }
     }
 
     public static void UpdatePitchingAndBattingAccuracyTextStyles(bool playerOneIsPitching)
     {
-        TMP_Text playerOneText = FindText("PlayerOneAccuracy-Text");
-        TMP_Text playerTwoText = FindText("PlayerTwoAccuracy-Text");
-        if (playerOneText != null) SetAccuracyStyle(playerOneText, !playerOneIsPitching);
-        if (playerTwoText != null) SetAccuracyStyle(playerTwoText, playerOneIsPitching);
+        TMP_Text playerOneAccuracyText = FindText("PlayerOneAccuracy-Text");
+        TMP_Text playerTwoAccuracyText = FindText("PlayerTwoAccuracy-Text");
+        TMP_Text playerOneComboText = FindText("PlayerOneCombo-Text");
+        TMP_Text playerTwoComboText = FindText("PlayerTwoCombo-Text");
+        if (playerOneAccuracyText != null) SetTextStyle(playerOneAccuracyText, !playerOneIsPitching);
+        if (playerTwoAccuracyText != null) SetTextStyle(playerTwoAccuracyText, playerOneIsPitching);
+        if (playerOneComboText != null) SetTextStyle(playerOneComboText, !playerOneIsPitching);
+        if (playerTwoComboText != null) SetTextStyle(playerTwoComboText, playerOneIsPitching);
     }
 
     public static void UpdatePlayerAccuracyDisplays(int playerOneAccuracyPercent, int playerTwoAccuracyPercent)
@@ -40,6 +59,7 @@ public static class GameUI
     }
 
     public static void ShowFinalResults(int playerOneAccuracyPercent, int playerTwoAccuracyPercent,
+        int playerOneHighestCombo, int playerTwoHighestCombo,
         bool playerOneHasHigherAccuracy, bool tied)
     {
         TMP_Text winnerText = FindText("Winner-Text");
@@ -49,10 +69,16 @@ public static class GameUI
         }
 
         TMP_Text playerOneText = FindText("PlayerOneFinalAccuracy-Text");
-        if (playerOneText != null) playerOneText.text = $"Player One Final Accuracy: {playerOneAccuracyPercent}%";
+        if (playerOneText != null) playerOneText.text = $"Accuracy: {playerOneAccuracyPercent}%";
 
         TMP_Text playerTwoText = FindText("PlayerTwoFinalAccuracy-Text");
-        if (playerTwoText != null) playerTwoText.text = $"Player Two Final Accuracy: {playerTwoAccuracyPercent}%";
+        if (playerTwoText != null) playerTwoText.text = $"Accuracy: {playerTwoAccuracyPercent}%";
+
+        TMP_Text playerOneComboText = FindText("PlayerOneFinalCombo-Text");
+        if (playerOneComboText != null) playerOneComboText.text = $"Highest Combo: {playerOneHighestCombo}";
+
+        TMP_Text playerTwoComboText = FindText("PlayerTwoFinalCombo-Text");
+        if (playerTwoComboText != null) playerTwoComboText.text = $"Highest Combo: {playerTwoHighestCombo}";
     }
 
     private static TMP_Text FindText(string objectName)
@@ -65,7 +91,7 @@ public static class GameUI
         return null;
     }
 
-    private static void SetAccuracyStyle(TMP_Text text, bool isBatting)
+    private static void SetTextStyle(TMP_Text text, bool isBatting)
     {
         text.fontSize = isBatting ? ActiveAccuracyFontSize : InactiveAccuracyFontSize;
         text.color = isBatting ? ActiveAccuracyColor : InactiveAccuracyColor;

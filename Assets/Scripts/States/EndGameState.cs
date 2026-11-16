@@ -45,6 +45,7 @@ public class EndGameState : GameState
             float playerOneAccuracy = data.GetPlayerOneAccuracy();
             float playerTwoAccuracy = data.GetPlayerTwoAccuracy();
             GameUI.ShowFinalResults(data.GetPlayerOneAccuracyPercent(), data.GetPlayerTwoAccuracyPercent(),
+                data.GetPlayerOneHighestCombo(), data.GetPlayerTwoHighestCombo(),
                 playerOneAccuracy > playerTwoAccuracy, Mathf.Approximately(playerOneAccuracy, playerTwoAccuracy));
         }
 
