@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private int inningsToPlay = 1;
     private int completedInnings;
     
+    private Canvas selectInningsCanvas;
 
     public void Awake()
     {
@@ -32,6 +33,15 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded; 
     }
 
+    public void Start()
+    {
+        selectInningsCanvas = GameObject.Find("SelectInnings-Canvas").GetComponent<Canvas>();
+
+        if (selectInningsCanvas != null)
+        {
+            selectInningsCanvas.enabled = false;
+        } else Debug.Log("SelectInnings-Canvas not found");
+    }
     private void Update()
     {
         if (CurrentState != null)
@@ -82,6 +92,13 @@ public class GameManager : MonoBehaviour
         {
             GameUI.UpdateInningDisplay(Mathf.Min(completedInnings + 1, inningsToPlay));
             if (CurrentState is EnteringLevelState enteringLevelState) enteringLevelState.SetupLoadedLevel();
+        } else if (scene.name == "Menu")
+        {
+            if (selectInningsCanvas == null)
+            {
+                selectInningsCanvas = GameObject.Find("SelectInnings-Canvas").GetComponent<Canvas>();
+            }
+            selectInningsCanvas.enabled = false;
         }
     }
     public LevelData CurrentLevelData => currentLevelData;
