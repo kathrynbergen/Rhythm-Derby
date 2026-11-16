@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
     public PlayingGameState PlayingState;
     
     private LevelData currentLevelData;
+    private int inningsToPlay = 1;
+    private int completedInnings;
+    private TMP_Text currentInningText;
     
 
     public void Awake()
@@ -58,13 +62,47 @@ public class GameManager : MonoBehaviour
         }
 
         currentLevelData = levelData;
+        completedInnings = 0;
         ChangeState(new EnteringLevelState(this));
+    }
+
+    public void SetInningsToPlay(int innings)
+    {
+        inningsToPlay = Mathf.Max(1, innings);
+    }
+
+    public bool CompleteInning()
+    {
+        completedInnings++;
+        UpdateCurrentInningText();
+        return completedInnings >= inningsToPlay;
+    }
+
+    private void UpdateCurrentInningText()
+    {
+        if (currentInningText == null)
+        {
+            foreach (TMP_Text text in FindObjectsByType<TMP_Text>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                if (text.gameObject.name != "CurrentInning-Text") continue;
+                currentInningText = text;
+                break;
+            }
+        }
+
+        if (currentInningText != null)
+        {
+            int currentInning = Mathf.Min(completedInnings + 1, inningsToPlay);
+            currentInningText.text = $"Inning: {currentInning}";
+        }
     }
     // every time the level is loaded, method is called
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Game")
         {
+            currentInningText = null;
+            UpdateCurrentInningText();
             if (CurrentState is EnteringLevelState enteringLevelState) enteringLevelState.SetupLoadedLevel();
         }
     }

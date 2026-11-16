@@ -11,25 +11,25 @@ public class EndGameState : GameState
         PlayerData data = Object.FindFirstObjectByType<PlayerData>();
         if (data == null) return;
         
-        // Player one pitches the first half; after that, player two gets to pitch.
-        if (data.PlayerOneIsPitching)
+        bool inningComplete = !data.PlayerOneIsPitching; // player one pitches once per inning
+        data.SwapSidesAndResetInning();
+        foreach (SpriteAnimator spriteAnimator in Object.FindObjectsByType<SpriteAnimator>(FindObjectsSortMode.None))
         {
-            data.SwapSidesAndResetInning();
-            foreach (SpriteAnimator spriteAnimator in Object.FindObjectsByType<SpriteAnimator>(FindObjectsSortMode.None))
-            {
-                spriteAnimator.SwapSides();
-            }
-            // move popup
-            if (popupManager == null) popupManager = Object.FindFirstObjectByType<PopupManager>();
-            popupManager.SwapSides();
-            Debug.Log("Three strikes. Swap sides: player two pitches, player one bats.");
-            gameManager.ChangeState(gameManager.PlayingState);
+            spriteAnimator.SwapSides();
         }
-        else
+
+        if (popupManager == null) popupManager = Object.FindFirstObjectByType<PopupManager>();
+        if (popupManager != null) popupManager.SwapSides();
+
+        if (inningComplete && gameManager.CompleteInning())
         {
-            Debug.Log("Three strikes in both halves. Game over.");
+            Debug.Log("All innings complete. Game over.");
             GameOver();
+            return;
         }
+
+        Debug.Log("Three strikes. Swapping sides.");
+        gameManager.ChangeState(gameManager.PlayingState);
     }
 
     public override void OnMyStateExited()
