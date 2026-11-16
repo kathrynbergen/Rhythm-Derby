@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 // playerdata can count # of misses("outs")/single/homeruns and store % accuracy score
@@ -22,6 +21,12 @@ public class PlayerData : MonoBehaviour
     private int playerTwoHomeRunCount = 0;
     private int playerTwoSingleCount = 0;
     private int playerTwoMissCount = 0;
+    
+    // combos
+    private int playerOneCurrentCombo = 0;
+    private int playerTwoCurrentCombo = 0;
+    private int playerOneMaxCombo = 0;
+    private int playerTwoMaxCombo = 0;
 
     public void ResetRun()
     {
@@ -37,8 +42,15 @@ public class PlayerData : MonoBehaviour
         playerTwoHomeRunCount = 0;
         playerTwoSingleCount = 0;
         playerTwoMissCount = 0;
+        // make sure combos are stored first!! problems might come from here
+        playerOneCurrentCombo = 0;
+        playerTwoCurrentCombo = 0;
+        playerOneMaxCombo = 0;
+        playerTwoMaxCombo = 0;
         GameUI.UpdatePlayerAccuracyDisplays(GetAccuracyPercent(playerOneAccuracyScore, playerOneInputCount), GetAccuracyPercent(playerTwoAccuracyScore, playerTwoInputCount));
         GameUI.UpdatePitchingAndBattingAccuracyTextStyles(PlayerOneIsPitching);
+        GameUI.UpdateComboDisplay(true, 0);
+        GameUI.UpdateComboDisplay(false, 0);
     }
     
     public void UpdateAccuracy(Accuracy accuracy)
@@ -50,17 +62,47 @@ public class PlayerData : MonoBehaviour
         switch (accuracy)
         {
             case Accuracy.HomeRun:
-                if (batterIsPlayerOne) { playerOneHomeRunCount++; playerOneAccuracyScore++; }
-                else { playerTwoHomeRunCount++; playerTwoAccuracyScore++; }
+                if (batterIsPlayerOne) { 
+                    playerOneHomeRunCount++; 
+                    playerOneAccuracyScore++;
+                    playerOneCurrentCombo++;
+                    playerOneMaxCombo = Mathf.Max(playerOneMaxCombo, playerOneCurrentCombo);
+                }
+                else { 
+                    playerTwoHomeRunCount++; 
+                    playerTwoAccuracyScore++; 
+                    playerTwoCurrentCombo++; 
+                    playerTwoMaxCombo = Mathf.Max(playerTwoMaxCombo, playerTwoCurrentCombo);
+                }
                 break;
             case Accuracy.Single:
-                if (batterIsPlayerOne) { playerOneSingleCount++; playerOneAccuracyScore += 0.5f; }
-                else { playerTwoSingleCount++; playerTwoAccuracyScore += 0.5f; }
+                if (batterIsPlayerOne) { 
+                    playerOneSingleCount++; 
+                    playerOneAccuracyScore += 0.5f;
+                    playerOneCurrentCombo++;
+                    playerOneMaxCombo = Mathf.Max(playerOneMaxCombo, playerOneCurrentCombo);
+                }
+                else { 
+                    playerTwoSingleCount++; 
+                    playerTwoAccuracyScore += 0.5f; 
+                    playerTwoCurrentCombo++; 
+                    playerTwoMaxCombo = Mathf.Max(playerTwoMaxCombo, playerTwoCurrentCombo);
+                }
                 break;
             case Accuracy.Strike:
                 inningStrikeCount++;
-                if (batterIsPlayerOne) playerOneMissCount++;
-                else playerTwoMissCount++;
+                if (batterIsPlayerOne)
+                {
+                    playerOneMissCount++;
+                    playerOneMaxCombo = Mathf.Max(playerOneMaxCombo, playerOneCurrentCombo);
+                    playerOneCurrentCombo = 0;
+                }
+                else
+                {
+                    playerTwoMissCount++;
+                    playerTwoMaxCombo = Mathf.Max(playerTwoMaxCombo, playerTwoCurrentCombo);
+                    playerTwoCurrentCombo = 0;
+                }
                 break;
             default:
                 Debug.Log("Unrecognized accuracy");
@@ -68,6 +110,8 @@ public class PlayerData : MonoBehaviour
         }
 
         GameUI.UpdatePlayerAccuracyDisplay(batterIsPlayerOne, GetAccuracyPercent(batterIsPlayerOne ? playerOneAccuracyScore : playerTwoAccuracyScore, batterIsPlayerOne ? playerOneInputCount : playerTwoInputCount));
+        int currentCombo = batterIsPlayerOne ? playerOneCurrentCombo : playerTwoCurrentCombo;
+        GameUI.UpdateComboDisplay(batterIsPlayerOne, currentCombo);
     }
 
     private static int GetAccuracyPercent(float score, int inputCount)
@@ -83,6 +127,16 @@ public class PlayerData : MonoBehaviour
     public int GetPlayerTwoAccuracyPercent()
     {
         return GetAccuracyPercent(playerTwoAccuracyScore, playerTwoInputCount);
+    }
+
+    public int GetPlayerOneHighestCombo()
+    {
+        return Mathf.Max(playerOneMaxCombo, playerOneCurrentCombo);
+    }
+
+    public int GetPlayerTwoHighestCombo()
+    {
+        return Mathf.Max(playerTwoMaxCombo, playerTwoCurrentCombo);
     }
     public float GetPlayerOneAccuracy()
     {
